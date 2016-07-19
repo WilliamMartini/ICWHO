@@ -23,14 +23,6 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -80,18 +72,20 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        if (id == R.id.nav_news) {
+            getSupportActionBar().setTitle("News");
+        } else if (id == R.id.nav_events) {
+            getSupportActionBar().setTitle("Events");
+        } else if (id == R.id.nav_gebaeude) {
+            getSupportActionBar().setTitle("Gebäudeplan BIN");
+        } else if (id == R.id.nav_mensa) {
+            getSupportActionBar().setTitle("Mensa BIN");
+        } else if (id == R.id.nav_xkcd) {
+            getSupportActionBar().setTitle("XKCD COTD");
+        } else if (id == R.id.nav_ueberuns) {
+            getSupportActionBar().setTitle("Über uns");
+        } else if (id == R.id.nav_about) {
+            getSupportActionBar().setTitle("About");
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
