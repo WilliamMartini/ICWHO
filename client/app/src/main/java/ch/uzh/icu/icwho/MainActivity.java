@@ -1,10 +1,8 @@
 package ch.uzh.icu.icwho;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -12,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -73,27 +72,42 @@ public class MainActivity extends AppCompatActivity
 
         getSupportActionBar().setTitle(item.getTitle());
 
-        /*int id = item.getItemId();
-
+        int id = item.getItemId();
         if (id == R.id.nav_news) {
-            getSupportActionBar().setTitle("News");
+
         } else if (id == R.id.nav_events) {
-            getSupportActionBar().setTitle("Events");
+
         } else if (id == R.id.nav_gebaeude) {
-            getSupportActionBar().setTitle("Gebäudeplan BIN");
+
         } else if (id == R.id.nav_mensa) {
-            getSupportActionBar().setTitle("Mensa BIN");
+
         } else if (id == R.id.nav_xkcd) {
-            getSupportActionBar().setTitle("XKCD COTD");
+
         } else if (id == R.id.nav_ueberuns) {
-            getSupportActionBar().setTitle("Über uns");
+
         } else if (id == R.id.nav_about) {
-            getSupportActionBar().setTitle("About");
-        }*/
-        
+            setFragment(R.id.container_main, new AboutFragment());
+        }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    Toast toast;
+    public void toaster(String s){
+
+        if(toast == null)
+            toast = Toast.makeText(this, s, Toast.LENGTH_SHORT);
+        else
+        {
+            toast.setText(s);
+        }
+        toast.show();
+    }
+
+    public void setFragment(int container, Fragment fragment) {
+        getSupportFragmentManager().beginTransaction().replace(container, fragment).commit();
     }
 }
