@@ -70,7 +70,10 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
+
+        getSupportActionBar().setTitle(item.getTitle());
+
+        /*int id = item.getItemId();
 
         if (id == R.id.nav_news) {
             getSupportActionBar().setTitle("News");
@@ -86,7 +89,8 @@ public class MainActivity extends AppCompatActivity
             getSupportActionBar().setTitle("Über uns");
         } else if (id == R.id.nav_about) {
             getSupportActionBar().setTitle("About");
-        }
+        }*/
+        
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
