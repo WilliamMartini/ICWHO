@@ -57,11 +57,15 @@ public class AboutFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_about, container, false);
 
-        TextView t = (TextView) view.findViewById(R.id.aboutText);
+        final TextView t = (TextView) view.findViewById(R.id.aboutText);
         WebView w = (WebView) view.findViewById(R.id.WebViewTest);
 
-        t.setText("About this app:\nDis da shit mon");
-        w.setWebViewClient(new WebViewClient());
+        t.setText("Please be patient while loading");
+        w.setWebViewClient(new WebViewClient() {
+            public void onPageFinished(WebView view, String url) {
+                t.setText("About this app:\nDis da shit mon");
+            }
+        });
         //w.loadUrl("https://www.google.ch");
         //w.loadUrl("http://www.zfv.ch/bhb/menuadmin/displaymenu.aspx?id=184");
 
