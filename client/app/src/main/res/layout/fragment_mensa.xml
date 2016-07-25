@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ch.uzh.icu.icwho.fragments.AboutFragment">
+    tools:context="ch.uzh.icu.icwho.fragments.MensaFragment">
+
 
     <LinearLayout
         android:orientation="vertical"
@@ -15,10 +16,14 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/aboutText"
+            android:layout_height="66dp"
+            android:id="@+id/loadingText"
             android:textAlignment="center" />
 
+        <WebView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/mensaWebView" />
     </LinearLayout>
 
 </FrameLayout>
