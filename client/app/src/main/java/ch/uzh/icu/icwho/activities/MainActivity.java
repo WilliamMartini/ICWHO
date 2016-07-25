@@ -1,4 +1,4 @@
-package ch.uzh.icu.icwho;
+package ch.uzh.icu.icwho.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -11,6 +11,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import ch.uzh.icu.icwho.R;
+import ch.uzh.icu.icwho.fragments.AboutFragment;
+import ch.uzh.icu.icwho.fragments.EventsFragment;
+import ch.uzh.icu.icwho.fragments.GebaudeFragment;
+import ch.uzh.icu.icwho.fragments.MensaFragment;
+import ch.uzh.icu.icwho.fragments.UeberUnsFragment;
+import ch.uzh.icu.icwho.fragments.XKCDFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -76,19 +84,18 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_news) {
 
         } else if (id == R.id.nav_events) {
-
+            setFragment(R.id.container_main, new EventsFragment());
         } else if (id == R.id.nav_gebaeude) {
-
+            setFragment(R.id.container_main, new GebaudeFragment());
         } else if (id == R.id.nav_mensa) {
-
+            setFragment(R.id.container_main, new MensaFragment());
         } else if (id == R.id.nav_xkcd) {
-
+            setFragment(R.id.container_main, new XKCDFragment());
         } else if (id == R.id.nav_ueberuns) {
-
+            setFragment(R.id.container_main, new UeberUnsFragment());
         } else if (id == R.id.nav_about) {
             setFragment(R.id.container_main, new AboutFragment());
         }
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
