@@ -1,14 +1,22 @@
 package ch.uzh.icu.icwho.fragments;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.widget.TextView;
+
+import org.json.JSONObject;
 
 import ch.uzh.icu.icwho.R;
+import ch.uzh.icu.icwho.services.HttpRequest;
 
 
 /**
@@ -45,10 +53,57 @@ public class XKCDFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_xkcd, container, false);
+        View view = inflater.inflate(R.layout.fragment_xkcd, container, false);
+
+        final TextView t = (TextView) view.findViewById(R.id.xkcdText);
+        final WebView w = (WebView) view.findViewById(R.id.xkcdWeb);
+
+
+        t.setText("Getting content");
+
+        String requestURL = "http://xkcd.com/info.0.json";
+
+        new AsyncTask<String, Void, String>() {
+            @Override
+            protected String doInBackground(String... strings) {
+                String imgurl = new String();
+
+                try {
+                    HttpRequest request = HttpRequest.get(strings[0]);
+                    String s = request.body();
+
+                    JSONObject obj = new JSONObject(s);
+
+                    imgurl = obj.getString("img");
+                } catch (Throwable t) {
+
+                }
+            return imgurl;
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+
+                //w.setInitialScale(1);
+                w.loadUrl(s);
+            }
+        }.execute(requestURL);
+
+
+        t.setText("Done getting content");
+
+
+
+        if (getActivity().getResources().getConfiguration().orientation == 2) {
+            t.setVisibility(View.GONE);
+        } else {
+            t.setVisibility(View.VISIBLE);
+        }
+
+        return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -83,5 +138,18 @@ public class XKCDFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        final TextView t = (TextView) getView().findViewById(R.id.xkcdText);
+
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            t.setVisibility(View.GONE);
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            t.setVisibility(View.VISIBLE);
+        }
     }
 }
