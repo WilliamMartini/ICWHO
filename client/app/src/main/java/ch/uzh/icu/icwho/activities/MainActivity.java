@@ -17,6 +17,7 @@ import ch.uzh.icu.icwho.fragments.AboutFragment;
 import ch.uzh.icu.icwho.fragments.EventsFragment;
 import ch.uzh.icu.icwho.fragments.GebaudeFragment;
 import ch.uzh.icu.icwho.fragments.MensaFragment;
+import ch.uzh.icu.icwho.fragments.NewsFragment;
 import ch.uzh.icu.icwho.fragments.UeberUnsFragment;
 import ch.uzh.icu.icwho.fragments.XKCDFragment;
 
@@ -74,16 +75,15 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-
         getSupportActionBar().setTitle(item.getTitle());
 
         int id = item.getItemId();
+        // set respective fragment
         if (id == R.id.nav_news) {
-
+            setFragment(R.id.container_main, new NewsFragment());
         } else if (id == R.id.nav_events) {
             setFragment(R.id.container_main, new EventsFragment());
         } else if (id == R.id.nav_gebaeude) {
@@ -98,11 +98,14 @@ public class MainActivity extends AppCompatActivity
             setFragment(R.id.container_main, new AboutFragment());
         }
 
+        // collapse navigation drawer
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+
         return true;
     }
 
+    // helper method: show "popup"
     Toast toast;
     public void toaster(String s){
 
@@ -115,6 +118,7 @@ public class MainActivity extends AppCompatActivity
         toast.show();
     }
 
+    // helper method: change fragment
     public void setFragment(int container, Fragment fragment) {
         getSupportFragmentManager().beginTransaction().replace(container, fragment).commit();
     }

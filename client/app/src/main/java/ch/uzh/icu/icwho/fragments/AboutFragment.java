@@ -51,6 +51,7 @@ public class AboutFragment extends Fragment {
 
         final TextView t = (TextView) view.findViewById(R.id.aboutText);
 
+        // set data and add to textview
         t.setText("Version: " + AppInfo.version + "\n");
         t.append("Datum: " + AppInfo.date);
 

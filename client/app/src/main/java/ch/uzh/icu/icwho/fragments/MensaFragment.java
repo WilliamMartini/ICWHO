@@ -48,9 +48,11 @@ public class MensaFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_mensa, container, false);
 
+        // find necessary views
         final TextView t = (TextView) view.findViewById(R.id.loadingText);
         WebView w = (WebView) view.findViewById(R.id.mensaWebView);
 
+        // set loading text and initialize webview with "onFinished"-method
         t.setText("Bitte etwas Geduld während der Menüplan geladen wird");
         w.setWebViewClient(new WebViewClient() {
             public void onPageFinished(WebView view, String url) {
@@ -59,6 +61,7 @@ public class MensaFragment extends Fragment {
             }
         });
 
+        // set URL for webview and load
         w.getSettings().setJavaScriptEnabled(true);
         String pdf = "http://www.zfv.ch/bhb/menuadmin/displaymenu.aspx?id=184";
         w.loadUrl("http://drive.google.com/viewerng/viewer?embedded=true&url=" + pdf);
