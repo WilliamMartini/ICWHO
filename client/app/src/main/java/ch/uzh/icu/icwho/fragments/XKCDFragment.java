@@ -30,6 +30,8 @@ import ch.uzh.icu.icwho.services.HttpRequest;
  * create an instance of this fragment.
  */
 public class XKCDFragment extends Fragment {
+    // declarations
+    private String requestURL = "http://xkcd.com/info.0.json";
 
     private OnFragmentInteractionListener mListener;
 
@@ -63,8 +65,6 @@ public class XKCDFragment extends Fragment {
 
         // set loading text
         t.setText("Versuche den neusten Comic zu laden. Internetverbindung?");
-
-        String requestURL = "http://xkcd.com/info.0.json";
 
         // AsyncTask for getting the URL of the newest comic
         new AsyncTask<String, Void, JSONObject>() {

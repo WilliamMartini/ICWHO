@@ -23,6 +23,10 @@ import ch.uzh.icu.icwho.R;
  * create an instance of this fragment.
  */
 public class MensaFragment extends Fragment {
+    // declarations
+    private String pdf = "http://www.zfv.ch/bhb/menuadmin/displaymenu.aspx?id=184";
+    private String pdfUrl = "http://drive.google.com/viewerng/viewer?embedded=true&url=" + pdf;
+
     private OnFragmentInteractionListener mListener;
 
     public MensaFragment() {
@@ -63,8 +67,7 @@ public class MensaFragment extends Fragment {
 
         // set URL for webview and load
         w.getSettings().setJavaScriptEnabled(true);
-        String pdf = "http://www.zfv.ch/bhb/menuadmin/displaymenu.aspx?id=184";
-        w.loadUrl("http://drive.google.com/viewerng/viewer?embedded=true&url=" + pdf);
+        w.loadUrl(pdfUrl);
 
         return view;
     }
