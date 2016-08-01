@@ -1,14 +1,24 @@
 package ch.uzh.icu.icwho.fragments;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.widget.TextView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import ch.uzh.icu.icwho.R;
+import ch.uzh.icu.icwho.services.HttpRequest;
 
 
 /**
@@ -20,6 +30,8 @@ import ch.uzh.icu.icwho.R;
  * create an instance of this fragment.
  */
 public class XKCDFragment extends Fragment {
+    // declarations
+    private String requestURL = "http://xkcd.com/info.0.json";
 
     private OnFragmentInteractionListener mListener;
 
@@ -45,10 +57,66 @@ public class XKCDFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_xkcd, container, false);
+        View view = inflater.inflate(R.layout.fragment_xkcd, container, false);
+
+        // find necessary views
+        final TextView t = (TextView) view.findViewById(R.id.xkcdText);
+        final WebView w = (WebView) view.findViewById(R.id.xkcdWeb);
+
+        // set loading text
+        t.setText("Versuche den neusten Comic zu laden. Internetverbindung?");
+
+        // AsyncTask for getting the URL of the newest comic
+        new AsyncTask<String, Void, JSONObject>() {
+            @Override
+            protected JSONObject doInBackground(String... strings) {
+                JSONObject jo = null;
+
+                try {
+                    // make request and convert to JSON
+                    HttpRequest request = HttpRequest.get(strings[0]);
+                    String s = request.body();
+
+                    jo = new JSONObject(s);
+                } catch (Throwable t) {
+
+                }
+            return jo;
+            }
+
+            @Override
+            protected void onPostExecute(JSONObject jo) {
+                super.onPostExecute(jo);
+
+                // extract URL and title from JSON
+                String imgurl = new String();
+                String title = new String();
+
+                try {
+                    imgurl = jo.getString("img");
+                    title = jo.getString("safe_title");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                // set URL for webview and add description
+                w.loadUrl(imgurl);
+                t.setText("xkcd.com - a webcomic of romance, sarcasm, math, and language\n");
+                t.append("Neu jeweils Montag, Mittwoch & Freitag\n\n");
+                t.append(Html.fromHtml("<b>" + title + "</b>"));
+            }
+        }.execute(requestURL);
+
+        // show text depending on orientation
+        if (getActivity().getResources().getConfiguration().orientation == 2) {
+            t.setVisibility(View.GONE);
+        } else {
+            t.setVisibility(View.VISIBLE);
+        }
+
+        return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
