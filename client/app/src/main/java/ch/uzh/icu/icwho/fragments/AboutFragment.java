@@ -53,7 +53,8 @@ public class AboutFragment extends Fragment {
 
         // set data and add to textview
         t.setText("Version: " + AppInfo.version + "\n");
-        t.append("Datum: " + AppInfo.date);
+        t.append("Datum: " + AppInfo.date + "\n");
+        t.append("\nFeedback bitte an app@icu.uzh.ch" + "\n");
 
         return view;
     }
