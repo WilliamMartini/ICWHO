@@ -5,9 +5,38 @@
     tools:context="ch.uzh.icu.icwho.fragments.UeberUnsFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="65dp" />
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ueberUnsSpinner"
+            android:entries="@array/ueberUnsArray"/>
+
+        <TextView
+            android:text="TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:id="@+id/linkText" />
+
+        <TextView
+            android:text="TextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ueberUnsText"
+            android:lineSpacingExtra="8sp"
+            android:textAlignment="center"
+            android:maxLines = "20"
+            android:scrollbars = "vertical"/>
+
+    </LinearLayout>
 </FrameLayout>

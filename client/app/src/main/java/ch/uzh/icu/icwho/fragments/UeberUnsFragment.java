@@ -4,9 +4,20 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.InputStream;
 
 import ch.uzh.icu.icwho.R;
 
@@ -20,6 +31,11 @@ import ch.uzh.icu.icwho.R;
  * create an instance of this fragment.
  */
 public class UeberUnsFragment extends Fragment {
+    // declarations
+    TextView t, l;
+    Spinner s;
+
+    String werSindwir, leitbild, vorstand, staff, mitgliedschaft;
 
     private OnFragmentInteractionListener mListener;
 
@@ -47,10 +63,56 @@ public class UeberUnsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_ueber_uns, container, false);
+        View view = inflater.inflate(R.layout.fragment_ueber_uns, container, false);
+
+        t = (TextView) view.findViewById(R.id.ueberUnsText);
+        l = (TextView) view.findViewById(R.id.linkText);
+        s = (Spinner) view.findViewById(R.id.ueberUnsSpinner);
+
+        s.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i == 0) {
+                    t.setText(Html.fromHtml(werSindwir));
+                } else if (i == 1) {
+                    t.setText(Html.fromHtml(leitbild));
+                } else if (i == 2) {
+                    t.setText(Html.fromHtml(vorstand));
+                } else if (i == 3) {
+                    t.setText(Html.fromHtml(staff));
+                } else if (i == 4) {
+                    t.setText(Html.fromHtml(mitgliedschaft));
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        l.setText(Html.fromHtml("<a href=\"https://www.icu.uzh.ch\">https://www.icu.uzh.ch</a>"));
+        l.setMovementMethod(LinkMovementMethod.getInstance());
+
+        // get content from JSON
+        try {
+            JSONObject jo = new JSONObject(loadJSONFromAsset());
+
+            werSindwir = jo.getString("werSindWir");
+            leitbild = jo.getString("leitbild");
+            vorstand = jo.getString("vorstand");
+            staff = jo.getString("staff");
+            mitgliedschaft = jo.getString("mitgliedschaft");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        t.setText(Html.fromHtml(werSindwir));
+        t.setMovementMethod(new ScrollingMovementMethod());
+
+        return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -86,5 +148,21 @@ public class UeberUnsFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public String loadJSONFromAsset() {
+        String json = null;
+        try {
+            InputStream is = getActivity().getAssets().open("ueberUns.json");
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return json;
     }
 }
