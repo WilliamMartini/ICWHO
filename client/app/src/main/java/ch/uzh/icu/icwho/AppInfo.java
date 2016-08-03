@@ -7,7 +7,7 @@ package ch.uzh.icu.icwho;
 public class AppInfo {
 
     // version of the app: X.Y[.Z]
-    public static String version = "0.2.1";
+    public static String version = "0.3";
 
     // release date: MM/YY
     public static String date = "08/16";
