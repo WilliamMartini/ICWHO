@@ -91,7 +91,7 @@ public class UeberUnsFragment extends Fragment {
             }
         });
 
-        l.setText(Html.fromHtml("<a href=\"https://www.icu.uzh.ch\">https://www.icu.uzh.ch</a>"));
+        l.setText(Html.fromHtml("<a href=\"https://www.icu.uzh.ch\">https://www.icu.uzh.ch</a>  "));
         l.setMovementMethod(LinkMovementMethod.getInstance());
 
         // get content from JSON
