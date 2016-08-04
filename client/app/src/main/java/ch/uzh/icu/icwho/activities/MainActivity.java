@@ -15,7 +15,7 @@ import android.widget.Toast;
 import ch.uzh.icu.icwho.R;
 import ch.uzh.icu.icwho.fragments.AboutFragment;
 import ch.uzh.icu.icwho.fragments.EventsFragment;
-import ch.uzh.icu.icwho.fragments.GebaudeFragment;
+import ch.uzh.icu.icwho.fragments.GebaeudeFragment;
 import ch.uzh.icu.icwho.fragments.MensaFragment;
 import ch.uzh.icu.icwho.fragments.NewsFragment;
 import ch.uzh.icu.icwho.fragments.UeberUnsFragment;
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_events) {
             setFragment(R.id.container_main, new EventsFragment());
         } else if (id == R.id.nav_gebaeude) {
-            setFragment(R.id.container_main, new GebaudeFragment());
+            setFragment(R.id.container_main, new GebaeudeFragment());
         } else if (id == R.id.nav_mensa) {
             setFragment(R.id.container_main, new MensaFragment());
         } else if (id == R.id.nav_xkcd) {

@@ -11,32 +11,40 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="65dp" />
-
         <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/ueberUnsSpinner"
-            android:entries="@array/ueberUnsArray"/>
+            android:entries="@array/ueberUnsArray" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dip"
+            android:background="#000000" />
 
         <TextView
             android:text="TextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:id="@+id/linkText" />
+            android:id="@+id/linkText"/>
 
-        <TextView
-            android:text="TextView"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/ueberUnsText"
-            android:lineSpacingExtra="8sp"
-            android:textAlignment="center"
-            android:maxLines = "20"
-            android:scrollbars = "vertical"/>
+            android:layout_height="match_parent">
+
+            <TextView
+                android:text="TextView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/ueberUnsText"
+                android:lineSpacingExtra="8sp"
+                android:textAlignment="center"
+                android:maxLines = "20"
+                android:scrollbars = "vertical"
+                android:layout_weight="1" />
+
+        </LinearLayout>
 
     </LinearLayout>
 </FrameLayout>
