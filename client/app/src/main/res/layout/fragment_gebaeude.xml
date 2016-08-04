@@ -1,0 +1,45 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ch.uzh.icu.icwho.fragments.GebaeudeFragment">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:srcCompat="@android:drawable/arrow_up_float"
+                android:id="@+id/upButton"
+                android:layout_weight="1"
+                android:backgroundTint="#81C784" />
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:srcCompat="@android:drawable/arrow_down_float"
+                android:id="@+id/downButton"
+                android:layout_weight="1"
+                android:backgroundTint="#81C784" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@android:color/background_light"
+            android:id="@+id/gebaeudeImage"
+            android:adjustViewBounds="false"
+            android:scaleType="fitXY" />
+
+    </LinearLayout>
+
+</FrameLayout>
