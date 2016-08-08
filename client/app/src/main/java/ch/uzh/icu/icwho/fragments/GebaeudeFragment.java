@@ -2,11 +2,13 @@ package ch.uzh.icu.icwho.fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -81,7 +83,21 @@ public class GebaeudeFragment extends Fragment {
 
         // add and set swipe listener
         final GestureDetector g = new GestureDetector(getActivity(), new GestureDetector.SimpleOnGestureListener () {
+            @Override
+            public boolean onDoubleTap(MotionEvent e) {
+                if (currentFloor == 1) {
+                    doorOpener++;
+                }
 
+                if (doorOpener > 4) {
+                    Intent intent= new Intent(Intent.ACTION_VIEW,Uri.parse("https://grape.icu.uzh.ch/"));
+                    startActivity(intent);
+
+                    doorOpener = 0;
+                }
+
+                return super.onDoubleTap(e);
+            }
 
             @Override
             public boolean onDown(MotionEvent e) {
@@ -204,4 +220,6 @@ public class GebaeudeFragment extends Fragment {
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
         super.onPause();
     }
+
+    int doorOpener = 0;
 }
