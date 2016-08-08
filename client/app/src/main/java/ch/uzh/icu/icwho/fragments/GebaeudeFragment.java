@@ -89,7 +89,7 @@ public class GebaeudeFragment extends Fragment {
                     doorOpener++;
                 }
 
-                if (doorOpener > 4) {
+                if (doorOpener > 2) {
                     Intent intent= new Intent(Intent.ACTION_VIEW,Uri.parse("https://grape.icu.uzh.ch/"));
                     startActivity(intent);
 
