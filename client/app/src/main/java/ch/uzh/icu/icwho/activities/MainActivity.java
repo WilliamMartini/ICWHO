@@ -1,5 +1,6 @@
 package ch.uzh.icu.icwho.activities;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -10,7 +11,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.Toast;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 import ch.uzh.icu.icwho.R;
 import ch.uzh.icu.icwho.fragments.AboutFragment;
@@ -23,6 +28,7 @@ import ch.uzh.icu.icwho.fragments.XKCDFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    ImageView i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +46,17 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        i = (ImageView) findViewById(R.id.startImage);
+
+        InputStream is = null;
+        try {
+            is = getAssets().open("background_cropped.png");
+            Drawable d = Drawable.createFromStream(is, null);
+            i.setImageDrawable(d);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -56,7 +73,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        //getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
@@ -68,9 +85,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        /*if (id == R.id.action_settings) {
             return true;
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }
@@ -79,6 +96,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         getSupportActionBar().setTitle(item.getTitle());
+        i.setImageDrawable(null);
 
         int id = item.getItemId();
         // set respective fragment

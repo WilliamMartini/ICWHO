@@ -4,10 +4,35 @@
     android:layout_height="match_parent"
     tools:context="ch.uzh.icu.icwho.fragments.NewsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:id="@+id/newsIntroText"
+            android:maxLines = "20"
+            android:scrollbars = "vertical"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:textStyle="normal|bold" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dip"
+            android:background="#000000" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/newsText"
+            android:lineSpacingExtra="8sp"
+            android:maxLines = "20"
+            android:scrollbars = "vertical"
+            android:layout_weight="1"
+            android:textAlignment="center" />
+    </LinearLayout>
 
 </FrameLayout>
