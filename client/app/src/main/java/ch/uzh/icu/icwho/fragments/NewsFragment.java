@@ -20,6 +20,7 @@ import org.json.JSONObject;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+import ch.uzh.icu.icwho.AppState;
 import ch.uzh.icu.icwho.R;
 import ch.uzh.icu.icwho.services.HttpRequest;
 
@@ -104,10 +105,10 @@ public class NewsFragment extends Fragment {
                     try {
                         ja = jo.getJSONArray("data");
 
-                        for (int i = 0; i < ja.length(); i++){
+                        for (int i = 0; i < ja.length(); i++) {
                             jo = ja.getJSONObject(i);
 
-                            if (jo.has("message")){
+                            if (jo.has("message")) {
                                 String message = jo.getString("message") + "\n";
                                 if (message.length() > 40) {
 
@@ -130,7 +131,7 @@ public class NewsFragment extends Fragment {
                 }
             }.execute(requestURL);
 
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
