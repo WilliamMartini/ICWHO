@@ -7,10 +7,12 @@ package ch.uzh.icu.icwho.models;
 public class Event {
     // fields
     private String name;
-    // TODO: start and end date
-    private int dateY;
-    private int dateM;
-    private int dateD;
+    private int startDateY;
+    private int startDateM;
+    private int startDateD;
+    private int endDateY;
+    private int endDateM;
+    private int endDateD;
     private int startTimeH;
     private int startTimeM;
     private int endTimeH;
@@ -20,17 +22,24 @@ public class Event {
     private String signUp;
 
 
-    // constructor
-    public Event(String name, int dateY, int dateM, int dateD, int startTimeH, int startTimeM, int endTimeH, int endTimeM, String description) {
+    // constructors
+    public Event() {}
+
+    public Event(String name, int startDateY, int startDateM, int startDateD, int endDateY, int endDateM, int endDateD, int startTimeH, int startTimeM, int endTimeH, int endTimeM, String description, String link, String signUp) {
         this.name = name;
-        this.dateY = dateY;
-        this.dateM = dateM;
-        this.dateD = dateD;
+        this.startDateY = startDateY;
+        this.startDateM = startDateM;
+        this.startDateD = startDateD;
+        this.endDateY = endDateY;
+        this.endDateM = endDateM;
+        this.endDateD = endDateD;
         this.startTimeH = startTimeH;
         this.startTimeM = startTimeM;
         this.endTimeH = endTimeH;
         this.endTimeM = endTimeM;
         this.description = description;
+        this.link = link;
+        this.signUp = signUp;
     }
 
 
@@ -43,28 +52,52 @@ public class Event {
         this.name = name;
     }
 
-    public int getDateY() {
-        return dateY;
+    public int getStartDateY() {
+        return startDateY;
     }
 
-    public void setDateY(int dateY) {
-        this.dateY = dateY;
+    public void setStartDateY(int startDateY) {
+        this.startDateY = startDateY;
     }
 
-    public int getDateM() {
-        return dateM;
+    public int getStartDateM() {
+        return startDateM;
     }
 
-    public void setDateM(int dateM) {
-        this.dateM = dateM;
+    public void setStartDateM(int startDateM) {
+        this.startDateM = startDateM;
     }
 
-    public int getDateD() {
-        return dateD;
+    public int getStartDateD() {
+        return startDateD;
     }
 
-    public void setDateD(int dateD) {
-        this.dateD = dateD;
+    public void setStartDateD(int startDateD) {
+        this.startDateD = startDateD;
+    }
+
+    public int getEndDateY() {
+        return endDateY;
+    }
+
+    public void setEndDateY(int endDateY) {
+        this.endDateY = endDateY;
+    }
+
+    public int getEndDateM() {
+        return endDateM;
+    }
+
+    public void setEndDateM(int endDateM) {
+        this.endDateM = endDateM;
+    }
+
+    public int getEndDateD() {
+        return endDateD;
+    }
+
+    public void setEndDateD(int endDateD) {
+        this.endDateD = endDateD;
     }
 
     public int getStartTimeH() {
@@ -107,21 +140,54 @@ public class Event {
         this.description = description;
     }
 
-    public String getDate() {
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public String getSignUp() {
+        return signUp;
+    }
+
+    public void setSignUp(String signUp) {
+        this.signUp = signUp;
+    }
+
+    public String getStartDate() {
         String d, m;
 
-        if (dateD < 10) {
-            d = "0" + dateD;
+        if (startDateD < 10) {
+            d = "0" + startDateD;
         } else {
-            d = String.valueOf(dateD);
+            d = String.valueOf(startDateD);
         }
-        if (dateM < 10) {
-            m = "0" + dateM;
+        if (startDateM < 10) {
+            m = "0" + startDateM;
         } else {
-            m = String.valueOf(dateM);
+            m = String.valueOf(startDateM);
         }
 
-        return (d + "." + m + "." + dateY);
+        return (d + "." + m + "." + startDateY);
+    }
+
+    public String getEndDate() {
+        String d, m;
+
+        if (endDateD < 10) {
+            d = "0" + endDateD;
+        } else {
+            d = String.valueOf(endDateD);
+        }
+        if (endDateM < 10) {
+            m = "0" + endDateM;
+        } else {
+            m = String.valueOf(endDateM);
+        }
+
+        return (d + "." + m + "." + endDateY);
     }
 
     public String getStartTime() {

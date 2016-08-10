@@ -9,6 +9,8 @@ import ch.uzh.icu.icwho.models.Event;
 public class AppState {
     // state of the app; needed for the back button
     public static int currentState = 0;
+    // 0 = default
+    // 1 = detailed event
 
     // slot for event which is passed for the detailed view
     public static Event currentEvent;

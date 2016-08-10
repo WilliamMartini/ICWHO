@@ -70,6 +70,9 @@ public class MainActivity extends AppCompatActivity
                 //super.onBackPressed();
                 drawer.openDrawer(GravityCompat.START);
             }
+        } else if (AppState.currentState == 1) {
+            setFragment(R.id.container_main, new EventsFragment());
+            AppState.currentState = 0;
         }
     }
 

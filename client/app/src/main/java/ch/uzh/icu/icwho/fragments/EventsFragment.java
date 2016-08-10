@@ -4,12 +4,16 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -61,27 +65,28 @@ public class EventsFragment extends Fragment {
         l = (ListView) v.findViewById(R.id.eventList);
 
         // Test Event
-        events.add(new Event("App Testing", 2016, 8, 10, 22, 0, 23, 0, "diese gut"));
-        events.add(new Event("App Release", 2016, 9, 2, 2, 0, 2, 0, "diese gut"));
+        events.add(new Event("App Testing", 2016, 8, 11, 2016, 8, 11, 0, 30, 1, 5, "diese gut?", "icu.uzh.ch", "Nein"));
+        events.add(new Event("App Release", 2016, 9, 1, 2016, 9, 2, 0, 0, 0, 5, "diese gut!", "icu.uzh.ch", "Ja"));
+
+        // TODO: add JSON parsing
 
         // add events for display in ListView
         for (Event e : events) {
-            eventsShort.add(e.getDate() + "\t\t" + e.getName() + "\n\t\t\t\t" + e.getStartTime() + " - " + e.getEndTime());
+            eventsShort.add(e.getStartDate() + "\t\t" + e.getName());
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, eventsShort);
         l.setAdapter(adapter);
 
         //TODO: implement listener
-        l.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        l.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 AppState.currentEvent = events.get(i);
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
+                AppState.currentState = 1;
 
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container_main, new AboutFragment()).commit();
             }
         });
 
@@ -122,5 +127,10 @@ public class EventsFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
+    }
+
+    public Event parseEvent(JSONObject jo) {
+        // TODO: add method body
+        return new Event();
     }
 }
