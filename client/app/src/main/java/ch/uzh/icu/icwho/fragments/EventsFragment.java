@@ -7,8 +7,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
+import java.util.ArrayList;
+
+import ch.uzh.icu.icwho.AppState;
 import ch.uzh.icu.icwho.R;
+import ch.uzh.icu.icwho.models.Event;
 
 
 /**
@@ -20,6 +27,10 @@ import ch.uzh.icu.icwho.R;
  * create an instance of this fragment.
  */
 public class EventsFragment extends Fragment {
+    // declarations
+    ListView l;
+    ArrayList<Event> events = new ArrayList<Event>();
+    ArrayList<String> eventsShort = new ArrayList<String>();
 
     private OnFragmentInteractionListener mListener;
 
@@ -45,7 +56,36 @@ public class EventsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_events, container, false);
+        View v = inflater.inflate(R.layout.fragment_events, container, false);
+
+        l = (ListView) v.findViewById(R.id.eventList);
+
+        // Test Event
+        events.add(new Event("App Testing", 2016, 8, 10, 22, 0, 23, 0, "diese gut"));
+        events.add(new Event("App Release", 2016, 9, 2, 2, 0, 2, 0, "diese gut"));
+
+        // add events for display in ListView
+        for (Event e : events) {
+            eventsShort.add(e.getDate() + "\t\t" + e.getName() + "\n\t\t\t\t" + e.getStartTime() + " - " + e.getEndTime());
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, eventsShort);
+        l.setAdapter(adapter);
+
+        //TODO: implement listener
+        l.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                AppState.currentEvent = events.get(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        return v;
     }
 
     public void onButtonPressed(Uri uri) {

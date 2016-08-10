@@ -17,6 +17,7 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.io.InputStream;
 
+import ch.uzh.icu.icwho.AppState;
 import ch.uzh.icu.icwho.R;
 import ch.uzh.icu.icwho.fragments.AboutFragment;
 import ch.uzh.icu.icwho.fragments.EventsFragment;
@@ -61,12 +62,14 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            //super.onBackPressed();
-            drawer.openDrawer(GravityCompat.START);
+        if (AppState.currentState == 0) {
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            if (drawer.isDrawerOpen(GravityCompat.START)) {
+                drawer.closeDrawer(GravityCompat.START);
+            } else {
+                //super.onBackPressed();
+                drawer.openDrawer(GravityCompat.START);
+            }
         }
     }
 
@@ -97,6 +100,8 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         getSupportActionBar().setTitle(item.getTitle());
         i.setImageDrawable(null);
+
+        AppState.currentState = 0;
 
         int id = item.getItemId();
         // set respective fragment
