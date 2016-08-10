@@ -109,17 +109,19 @@ public class NewsFragment extends Fragment {
 
                             if (jo.has("message")){
                                 String message = jo.getString("message") + "\n";
+                                if (message.length() > 40) {
 
-                                String date = new String();
-                                String dateTime = jo.getString("created_time");
-                                // convert date
-                                String[] dateTimeArr = dateTime.split("T");
-                                String[] dateArr = dateTimeArr[0].split("-");
-                                date = dateArr[2] + "." + dateArr[1] + "." + dateArr[0];
+                                    String date = new String();
+                                    String dateTime = jo.getString("created_time");
+                                    // convert date
+                                    String[] dateTimeArr = dateTime.split("T");
+                                    String[] dateArr = dateTimeArr[0].split("-");
+                                    date = dateArr[2] + "." + dateArr[1] + "." + dateArr[0];
 
-                                //String news = date + "\n" + message + "----------------";
-                                t.append(Html.fromHtml("<b>" + date + "</b><br/>"));// + message + "<br/><b>--------------</b><br/><br/>"));
-                                t.append(message + "--------------\n\n");
+                                    //String news = date + "\n" + message + "----------------";
+                                    t.append(Html.fromHtml("<b>" + date + "</b><br/>"));// + message + "<br/><b>--------------</b><br/><br/>"));
+                                    t.append(message + "--------------\n\n");
+                                }
                             }
                         }
                     } catch (JSONException e) {
