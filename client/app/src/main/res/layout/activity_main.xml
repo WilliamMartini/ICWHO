@@ -36,6 +36,14 @@
                 android:layout_height="match_parent"
                 android:id="@+id/container_main">
 
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:srcCompat="@android:color/background_light"
+                    android:id="@+id/startImage"
+                    android:adjustViewBounds="false"
+                    android:scaleType="fitXY" />
+
             </FrameLayout>
 
             <Space

@@ -55,6 +55,7 @@ public class AboutFragment extends Fragment {
         t.setText("Version: " + AppInfo.version + "\n");
         t.append("Datum: " + AppInfo.date + "\n");
         t.append("\nFeedback bitte an app@icu.uzh.ch" + "\n");
+        t.append("\n\n\n" + AppInfo.disclaimer);
 
         return view;
     }

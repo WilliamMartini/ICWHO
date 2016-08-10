@@ -65,16 +65,11 @@ public class NewsFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_news, container, false);
 
         t = (TextView) v.findViewById(R.id.newsText);
-        TextView l = (TextView) v.findViewById(R.id.newsIntroText);
-
-        l.setText("Die Neuigkeiten der letzten Wochen!\nBesuche uns auf Facebook:\n");
-        l.append(Html.fromHtml("<a href=\"https://www.facebook.com/FVICU/\">https://www.facebook.com/FVICU/</a>"));
-        l.setMovementMethod(LinkMovementMethod.getInstance());
-
         t.setText("Lade die letzten News ...");
         t.setMovementMethod(LinkMovementMethod.getInstance());
 
         try {
+            // TODO: add request for JSON from FB
             new AsyncTask<String, Void, JSONObject>() {
                 @Override
                 protected JSONObject doInBackground(String... strings) {
@@ -105,25 +100,71 @@ public class NewsFragment extends Fragment {
                         ja = jo.getJSONArray("data");
 
                         for (int i = 0; i < ja.length(); i++){
-                            jo = ja.getJSONObject(i);
-
-                            if (jo.has("message")){
-                                String message = jo.getString("message") + "\n";
-                                if (message.length() > 40) {
-
-                                    String date = new String();
-                                    String dateTime = jo.getString("created_time");
-                                    // convert date
-                                    String[] dateTimeArr = dateTime.split("T");
-                                    String[] dateArr = dateTimeArr[0].split("-");
-                                    date = dateArr[2] + "." + dateArr[1] + "." + dateArr[0];
-
-                                    //String news = date + "\n" + message + "----------------";
-                                    t.append(Html.fromHtml("<b>" + date + "</b><br/>"));// + message + "<br/><b>--------------</b><br/><br/>"));
-                                    t.append(message + "--------------\n\n");
-                                }
-                            }
+                            String id = ja.getJSONObject(i).getString("id");
+                            postIDs.add(id);
                         }
+
+                        for (String s : postIDs){
+                            new AsyncTask<String, Void, JSONObject>() {
+                                @Override
+                                protected JSONObject doInBackground(String... strings) {
+                                    JSONObject jo = null;
+
+                                    try {
+                                        // make request and convert to JSON
+                                        HttpRequest request = HttpRequest.get(strings[0]);
+                                        String s = request.body();
+
+                                        jo = new JSONObject(s);
+                                    } catch (Throwable t) {
+
+                                    }
+                                    return jo;
+                                }
+
+                                @Override
+                                protected void onPostExecute(JSONObject jo) {
+                                    super.onPostExecute(jo);
+
+                                    // extract date from JSON
+                                    String date = new String();
+                                    String caption = new String();
+                                    String story = new String();
+                                    String description = new String();
+                                    String message = new String();
+
+                                    try {
+                                        String dateTime = jo.getString("created_time");
+                                        // convert date
+                                        String[] dateTimeArr = dateTime.split("T");
+                                        String[] dateArr = dateTimeArr[0].split("-");
+                                        date = dateArr[2] + "." + dateArr[1] + "." + dateArr[0];
+
+                                        if (jo.has("caption")){
+                                            caption = " - " + jo.getString("caption");
+                                        }
+                                        if (jo.has("story")){
+                                            story = jo.getString("story") + "\n";
+                                        }
+                                        if (jo.has("description")){
+                                            description = jo.getString("description") + "\n";
+                                        }
+                                        if (jo.has("message")){
+                                            message = jo.getString("message") + "\n";
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                    String news = date + caption + "\n" + description + message + "----------------";
+
+                                    t.append(news + "\n\n\n");
+                                }
+                            }.execute("https://graph.facebook.com/" + s);
+                            //t.append(s + "\n");
+                        }
+
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
