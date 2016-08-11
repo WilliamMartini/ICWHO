@@ -16,4 +16,6 @@ public class AppState {
     public static Event currentEvent;
 
     public static String eventVersion = "?";
+
+    public static boolean firstStart = true;
 }

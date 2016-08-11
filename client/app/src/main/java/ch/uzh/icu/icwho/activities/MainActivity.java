@@ -50,13 +50,17 @@ public class MainActivity extends AppCompatActivity
 
         i = (ImageView) findViewById(R.id.startImage);
 
-        InputStream is = null;
-        try {
-            is = getAssets().open("background_cropped.png");
-            Drawable d = Drawable.createFromStream(is, null);
-            i.setImageDrawable(d);
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (AppState.firstStart) {
+
+            InputStream is = null;
+            try {
+                is = getAssets().open("background_cropped_arrow.png");
+                Drawable d = Drawable.createFromStream(is, null);
+                i.setImageDrawable(d);
+                AppState.firstStart = false;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
