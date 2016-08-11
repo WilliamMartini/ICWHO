@@ -14,4 +14,6 @@ public class AppState {
 
     // slot for event which is passed for the detailed view
     public static Event currentEvent;
+
+    public static String eventVersion = "?";
 }

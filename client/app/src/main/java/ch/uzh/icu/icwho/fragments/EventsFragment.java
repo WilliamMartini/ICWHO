@@ -4,17 +4,17 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import ch.uzh.icu.icwho.AppState;
@@ -65,10 +65,21 @@ public class EventsFragment extends Fragment {
         l = (ListView) v.findViewById(R.id.eventList);
 
         // Test Event
-        events.add(new Event("App Testing", 2016, 8, 11, 2016, 8, 11, 0, 30, 1, 5, "diese gut?", "icu.uzh.ch", "Nein"));
-        events.add(new Event("App Release", 2016, 9, 1, 2016, 9, 2, 0, 0, 0, 5, "diese gut!", "icu.uzh.ch", "Ja"));
+        //events.add(new Event("App Testing", 2016, 8, 11, 2016, 8, 11, 0, 30, 1, 5, "diese gut?", "icu.uzh.ch", "Nein"));
+        //events.add(new Event("App Release", 2016, 9, 1, 2016, 9, 2, 0, 0, 0, 5, "diese gut!", "google.ch", "Ja"));
 
-        // TODO: add JSON parsing
+        // TODO: get JSON from remote?
+        try {
+            JSONObject jo = new JSONObject(loadJSONFromAsset());
+
+            JSONArray ja = ja = jo.getJSONArray("data");
+            AppState.eventVersion = jo.getString("version");
+            for (int i = 0; i < ja.length(); i++) {
+                events.add(new Event(ja.getJSONObject(i)));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         // add events for display in ListView
         for (Event e : events) {
@@ -78,7 +89,6 @@ public class EventsFragment extends Fragment {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, eventsShort);
         l.setAdapter(adapter);
 
-        //TODO: implement listener
         l.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -86,7 +96,7 @@ public class EventsFragment extends Fragment {
 
                 AppState.currentState = 1;
 
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container_main, new AboutFragment()).commit();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container_main, new DetailedEventFragment()).commit();
             }
         });
 
@@ -129,8 +139,19 @@ public class EventsFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    public Event parseEvent(JSONObject jo) {
-        // TODO: add method body
-        return new Event();
+    public String loadJSONFromAsset() {
+        String json = null;
+        try {
+            InputStream is = getActivity().getAssets().open("events.json");
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return json;
     }
 }

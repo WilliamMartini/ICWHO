@@ -1,5 +1,8 @@
 package ch.uzh.icu.icwho.models;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by Flo on 10.08.2016.
  */
@@ -20,12 +23,13 @@ public class Event {
     private String description;
     private String link;
     private String signUp;
+    private String location;
 
 
     // constructors
     public Event() {}
 
-    public Event(String name, int startDateY, int startDateM, int startDateD, int endDateY, int endDateM, int endDateD, int startTimeH, int startTimeM, int endTimeH, int endTimeM, String description, String link, String signUp) {
+    public Event(String name, int startDateY, int startDateM, int startDateD, int endDateY, int endDateM, int endDateD, int startTimeH, int startTimeM, int endTimeH, int endTimeM, String description, String link, String signUp, String location) {
         this.name = name;
         this.startDateY = startDateY;
         this.startDateM = startDateM;
@@ -40,6 +44,25 @@ public class Event {
         this.description = description;
         this.link = link;
         this.signUp = signUp;
+        this.location = location;
+    }
+
+    public Event(JSONObject jo) throws JSONException {
+        this.name = jo.getString("name");
+        this.startDateY = Integer.parseInt(jo.getString("startDateY"));
+        this.startDateM = Integer.parseInt(jo.getString("startDateM"));
+        this.startDateD = Integer.parseInt(jo.getString("startDateD"));
+        this.endDateY = Integer.parseInt(jo.getString("endDateY"));
+        this.endDateM = Integer.parseInt(jo.getString("endDateM"));
+        this.endDateD = Integer.parseInt(jo.getString("endDateD"));
+        this.startTimeH = Integer.parseInt(jo.getString("startTimeH"));
+        this.startTimeM = Integer.parseInt(jo.getString("startTimeM"));
+        this.endTimeH = Integer.parseInt(jo.getString("endTimeH"));
+        this.endTimeM = Integer.parseInt(jo.getString("endTimeM"));
+        this.description = jo.getString("description");
+        this.link = jo.getString("link");
+        this.signUp = jo.getString("signUp");
+        this.location = jo.getString("location");
     }
 
 
@@ -154,6 +177,14 @@ public class Event {
 
     public void setSignUp(String signUp) {
         this.signUp = signUp;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public String getStartDate() {

@@ -12,6 +12,7 @@ import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import ch.uzh.icu.icwho.AppInfo;
+import ch.uzh.icu.icwho.AppState;
 import ch.uzh.icu.icwho.R;
 
 /**
@@ -54,6 +55,7 @@ public class AboutFragment extends Fragment {
         // set data and add to textview
         t.setText("Version: " + AppInfo.version + "\n");
         t.append("Datum: " + AppInfo.date + "\n");
+        t.append("Version der Events: " + AppState.eventVersion + "\n");
         t.append("\nFeedback bitte an app@icu.uzh.ch" + "\n");
         t.append("\n\n\n" + AppInfo.disclaimer);
 
